@@ -4,7 +4,7 @@ Name:		DevIL
 Version:	1.6.6
 %define		manual_version	1.5.5
 %define		docs_version	1.4.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
@@ -93,6 +93,7 @@ Dokumentacja DevIL.
 #cp %{SOURCE1} %{SOURCE2} .
 
 %build
+cp -f /usr/share/automake/config.sub .
 %{__libtoolize}
 %{__aclocal}
 %{__automake}
