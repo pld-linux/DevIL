@@ -12,6 +12,8 @@ Source1:	http://openil.sourceforge.net/docs/%{name}%20Manual.pdf
 Source2:	http://openil.sourceforge.net/docs/%{name}%20Reference%20Guide.pdf
 # Source2-md5:	c5fec53a179df61d2401311c63fbfef0
 URL:		http://openil.sourceforge.net/
+BuildRequires:	OpenGL-devel
+BuildRequires:	SDL-devel
 BuildRequires:	allegro-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -21,8 +23,6 @@ BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool
-BuildRequires:	OpenGL-devel
-BuildRequires:	SDL-devel
 Requires:	OpenGL
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -101,7 +101,8 @@ cp %{SOURCE1} %{SOURCE2} .
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
