@@ -6,8 +6,11 @@ Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
+# Source0-md5:	e55f14ad26660887d9c671f71c65fae3
 Source1:	http://openil.sourceforge.net/docs/%{name}%20Manual.pdf
+# Source1-md5:	329597aebae8c4387866771888485eb5
 Source2:	http://openil.sourceforge.net/docs/%{name}%20Reference%20Guide.pdf
+# Source2-md5:	c5fec53a179df61d2401311c63fbfef0
 URL:		http://openil.sourceforge.net/
 BuildRequires:	allegro-devel
 BuildRequires:	autoconf
