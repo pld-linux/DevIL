@@ -1,18 +1,21 @@
+# ToDo:
+# - fix %%build - one of the lib/auto* calls breaks build -
+#   libraries are named libfoo.1.2.3 instead of libfoo.so.1.2.3
 Summary:	Full featured image library
 Summary(pl):	Biblioteka obs³ugi obrazów z mnóstwem funkcji
 Name:		DevIL
-Version:	1.6.6
+Version:	1.6.7
 %define		manual_version	1.5.5
-%define		docs_version	1.4.0
-Release:	2
+%define		docs_version	1.6.5
+Release:	0.1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
-# Source0-md5:	57dd2156049f0335d2535724418a89ea
+# Source0-md5:	0d0c3842196d85c4e24bedabcd84f626
 Source1:	http://dl.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
 # Source1-md5:	6bb2ddfcbe09930c48ef84b8f99479fe
-Source2:	http://dl.sourceforge.net/openil/%{name}-Docs-%{docs_version}.zip
-# Source2-md5:	eb1adc2e0ee154a97490b2178d41996a
+Source2:	http://dl.sourceforge.net/openil/%{name}-docs.tar.gz
+# Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL-devel
@@ -88,16 +91,16 @@ DevIL documentation.
 Dokumentacja DevIL.
 
 %prep
-%setup -q -n %{name} -a1 -a2
+%setup -q -a1 -a2
 
 #cp %{SOURCE1} %{SOURCE2} .
 
 %build
 cp -f /usr/share/automake/config.sub .
-%{__libtoolize}
-%{__aclocal}
-%{__automake}
-%{__autoconf}
+#%%{__libtoolize}
+#%%{__aclocal}
+#%%{__automake}
+#%%{__autoconf}
 %configure \
 	%{?debug:--disable-release}
 %{__make}
