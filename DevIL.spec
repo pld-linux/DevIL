@@ -1,14 +1,14 @@
 Summary:	Full featured image library
 Summary(pl):	Biblioteka obs³ugi obrazów z mnóstwem funkcji
 Name:		DevIL
-Version:	1.6.5
+Version:	1.6.6
 %define		manual_version	1.5.5
 %define		docs_version	1.4.0
 Release:	1
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
-# Source0-md5:	e55f14ad26660887d9c671f71c65fae3
+# Source0-md5:	57dd2156049f0335d2535724418a89ea
 Source1:	http://dl.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
 # Source1-md5:	6bb2ddfcbe09930c48ef84b8f99479fe
 Source2:	http://dl.sourceforge.net/openil/%{name}-Docs-%{docs_version}.zip
@@ -25,6 +25,7 @@ BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool
+BuildRequires:	unzip
 Requires:	OpenGL
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
