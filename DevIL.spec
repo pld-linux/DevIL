@@ -71,7 +71,7 @@ pgm, png, ppm, raw, sgi, tga i tif.
 Summary:	DevIL devel files
 Summary(pl):	Nag³ówki DevIL
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 DevIL devel files.
@@ -92,8 +92,6 @@ Dokumentacja DevIL.
 
 %prep
 %setup -q -a1 -a2
-
-#cp %{SOURCE1} %{SOURCE2} .
 
 %build
 cp -f /usr/share/automake/config.sub .
