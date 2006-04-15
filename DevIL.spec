@@ -7,7 +7,7 @@ Name:		DevIL
 Version:	1.6.7
 %define		manual_version	1.5.5
 %define		docs_version	1.6.5
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
@@ -119,6 +119,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS BUGS CREDITS ChangeLog README.unix
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
+%{_libdir}/libIL*.la
 
 %files devel
 %defattr(644,root,root,755)
