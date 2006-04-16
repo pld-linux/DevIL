@@ -1,6 +1,3 @@
-# ToDo:
-# - fix %%build - one of the lib/auto* calls breaks build -
-#   libraries are named libfoo.1.2.3 instead of libfoo.so.1.2.3
 Summary:	Full featured image library
 Summary(pl):	Biblioteka obs³ugi obrazów z mnóstwem funkcji
 Name:		DevIL
@@ -16,20 +13,21 @@ Source1:	http://dl.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
 # Source1-md5:	6bb2ddfcbe09930c48ef84b8f99479fe
 Source2:	http://dl.sourceforge.net/openil/%{name}-docs.tar.gz
 # Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
+Patch0:		%{name}-link.patch
 URL:		http://openil.sourceforge.net/
-BuildRequires:	OpenGL-devel
-BuildRequires:	SDL-devel
-BuildRequires:	allegro-devel
-BuildRequires:	autoconf
+BuildRequires:	OpenGL-GLU-devel
+BuildRequires:	SDL-devel >= 1.2.5
+BuildRequires:	allegro-devel >= 4.1.16
+BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
 BuildRequires:	lcms-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2:1.5
 BuildRequires:	unzip
-Requires:	OpenGL
+Requires:	allegro >= 4.1.16
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
@@ -72,6 +70,12 @@ Summary:	DevIL devel files
 Summary(pl):	Nag³ówki DevIL
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	lcms-devel
+Requires:	libjpeg-devel
+Requires:	libmng-devel
+Requires:	libpng-devel
+Requires:	libtiff-devel
+# libILUT additionally: SDL-devel, allegro-devel, OpenGL-GLU-devel
 
 %description devel
 DevIL devel files.
@@ -92,13 +96,16 @@ Dokumentacja DevIL.
 
 %prep
 %setup -q -a1 -a2
+%patch0 -p1
+
+# just SDL and messing libtool macros
+rm -f acinclude.m4
 
 %build
-cp -f /usr/share/automake/config.sub .
-#%%{__libtoolize}
-#%%{__aclocal}
-#%%{__automake}
-#%%{__autoconf}
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__automake}
 %configure \
 	%{?debug:--disable-release}
 %{__make}
@@ -118,13 +125,19 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS BUGS CREDITS ChangeLog README.unix
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
-%{_libdir}/libIL*.la
+%attr(755,root,root) %{_libdir}/libIL.so.*.*.*
+%attr(755,root,root) %{_libdir}/libILU.so.*.*.*
+%attr(755,root,root) %{_libdir}/libILUT.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
-%{_libdir}/lib*.so
-%{_includedir}/*
+%attr(755,root,root) %{_libdir}/libIL.so
+%attr(755,root,root) %{_libdir}/libILU.so
+%attr(755,root,root) %{_libdir}/libILUT.so
+%{_libdir}/libIL.la
+%{_libdir}/libILU.la
+%{_libdir}/libILUT.la
+%{_includedir}/IL
 
 %files doc
 %defattr(644,root,root,755)
