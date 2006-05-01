@@ -86,7 +86,7 @@ Nag³ówki DevIL.
 %package doc
 Summary:	DevIL documentation
 Summary(pl):	Dokumentacja DevIL
-Group:		Development/Libraries
+Group:		Documentation
 
 %description doc
 DevIL documentation.
