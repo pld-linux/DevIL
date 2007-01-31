@@ -2,19 +2,21 @@ Summary:	Full featured image library
 Summary(pl):	Biblioteka obs³ugi obrazów z mnóstwem funkcji
 Name:		DevIL
 Version:	1.6.8
-%define		_rc	RC1
+%define		_rc	rc2
 %define		manual_version	1.5.5
 %define		docs_version	1.6.5
 Release:	0.%{_rc}.1
-License:	GPL
+License:	LGPL
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}-%{_rc}-src.tar.gz
-# Source0-md5:	1a850a979057174e01ae87ed6405dd61
+Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}-%{_rc}.tar.bz2
+# Source0-md5:	444f1290a4688c4530b9d07a521da212
 Source1:	http://dl.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
 # Source1-md5:	6bb2ddfcbe09930c48ef84b8f99479fe
 Source2:	http://dl.sourceforge.net/openil/%{name}-docs.tar.gz
 # Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
-Patch0:		%{name}-link.patch
+Patch0:		%{name}-typo.patch
+# no longer needed ? - check
+#Patch0:		%{name}-link.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
@@ -96,7 +98,7 @@ DevIL documentation.
 Dokumentacja DevIL.
 
 %prep
-%setup -q -n %{name}-%{version}-%{_rc} -a1 -a2
+%setup -q -a1 -a2
 %patch0 -p1
 
 # just SDL and messing libtool macros
@@ -125,7 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS BUGS CREDITS ChangeLog README.unix
+%doc AUTHORS CREDITS ChangeLog README.unix
 %attr(755,root,root) %{_libdir}/libIL.so.*.*.*
 %attr(755,root,root) %{_libdir}/libILU.so.*.*.*
 %attr(755,root,root) %{_libdir}/libILUT.so.*.*.*
