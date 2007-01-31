@@ -1,0 +1,11 @@
+--- DevIL-1.6.8/include/IL/ilut.h~	2007-01-31 14:27:24.000000000 +0100
++++ DevIL-1.6.8/include/IL/ilut.h	2007-01-31 14:25:01.000000000 +0100
+@@ -234,7 +234,7 @@
+ extern "C" {
+ #endif
+ 
+-	ILAPI BITMAP* ILAPIENTRY ilutAllegLoadImage(Lstring FileName);
++	ILAPI BITMAP* ILAPIENTRY ilutAllegLoadImage(ILstring FileName);
+ 	ILAPI BITMAP* ILAPIENTRY ilutConvertToAlleg(PALETTE Pal);
+ #endif//ILUT_USE_ALLEGRO
+ 
