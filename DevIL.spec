@@ -4,7 +4,7 @@ Name:		DevIL
 Version:	1.6.6
 %define		manual_version	1.5.5
 %define		docs_version	1.4.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
