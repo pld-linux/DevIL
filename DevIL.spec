@@ -1,5 +1,5 @@
 Summary:	Full featured image library
-Summary(pl):	Biblioteka obs³ugi obrazów z mnóstwem funkcji
+Summary(pl.UTF-8):   Biblioteka obsÅ‚ugi obrazÃ³w z mnÃ³stwem funkcji
 Name:		DevIL
 Version:	1.6.8
 %define		_rc	rc2
@@ -51,26 +51,26 @@ Currently, DevIL can load .bmp, .cut, .dds, .doom, .gif, .ico, .jpg,
 Formats supported for saving include .bmp, .dds, .h, .jpg, .pal, .pbm,
 .pcx, .pgm, .png, .ppm, .raw, .sgi, .tga and .tif.
 
-%description -l pl
-Developer's Image Library (DevIL) jest bibliotek± programisty
-pozwalaj±c± tworzyæ aplikacje z potê¿nymi mo¿liwo¶ciami ³adowania
-obrazów. Pozostaje przy tym ³atwa w u¿yciu i prosta do nauczenia siê.
-Ostateczna kontrola nad obrazami jest zostawiona programi¶cie, nie
-wprowadza siê niepotrzebnych konwersji, itp. DevIL u¿ywa prostej, lecz
-potê¿nej sk³adni poleceñ, wzorowanej na OpenGL-u. DevIL potrafi
-³adowaæ, zapisywaæ, konwertowaæ, manipulowaæ, filtrowaæ szeroki
-wachlarz formatów plików graficznych.
+%description -l pl.UTF-8
+Developer's Image Library (DevIL) jest bibliotekÄ… programisty
+pozwalajÄ…cÄ… tworzyÄ‡ aplikacje z potÄ™Å¼nymi moÅ¼liwoÅ›ciami Å‚adowania
+obrazÃ³w. Pozostaje przy tym Å‚atwa w uÅ¼yciu i prosta do nauczenia siÄ™.
+Ostateczna kontrola nad obrazami jest zostawiona programiÅ›cie, nie
+wprowadza siÄ™ niepotrzebnych konwersji, itp. DevIL uÅ¼ywa prostej, lecz
+potÄ™Å¼nej skÅ‚adni poleceÅ„, wzorowanej na OpenGL-u. DevIL potrafi
+Å‚adowaÄ‡, zapisywaÄ‡, konwertowaÄ‡, manipulowaÄ‡, filtrowaÄ‡ szeroki
+wachlarz formatÃ³w plikÃ³w graficznych.
 
 W chwili obecnej DevIL odczytuje pliki z rozszerzeniami bmp, cut, dds,
 doom, gif, ico, jpg, lbm, mdl, mng, pal, pbm, pcd, pcx, pgm, pic, png,
 ppm, psd, psp, raw, sgi, tga i tif.
 
-Wspierane jest zapisywanie do plików bmp, dds, h, jpg, pal, pbm, pcx,
+Wspierane jest zapisywanie do plikÃ³w bmp, dds, h, jpg, pal, pbm, pcx,
 pgm, png, ppm, raw, sgi, tga i tif.
 
 %package devel
 Summary:	DevIL devel files
-Summary(pl):	Nag³ówki DevIL
+Summary(pl.UTF-8):   NagÅ‚Ã³wki DevIL
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	lcms-devel
@@ -83,18 +83,18 @@ Requires:	libtiff-devel
 %description devel
 DevIL devel files.
 
-%description devel -l pl
-Nag³ówki DevIL.
+%description devel -l pl.UTF-8
+NagÅ‚Ã³wki DevIL.
 
 %package doc
 Summary:	DevIL documentation
-Summary(pl):	Dokumentacja DevIL
+Summary(pl.UTF-8):   Dokumentacja DevIL
 Group:		Documentation
 
 %description doc
 DevIL documentation.
 
-%description doc -l pl
+%description doc -l pl.UTF-8
 Dokumentacja DevIL.
 
 %prep
