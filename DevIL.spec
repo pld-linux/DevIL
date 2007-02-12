@@ -1,5 +1,5 @@
 Summary:	Full featured image library
-Summary(pl.UTF-8):   Biblioteka obsługi obrazów z mnóstwem funkcji
+Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
 Name:		DevIL
 Version:	1.6.8
 %define		_rc	rc2
@@ -70,7 +70,7 @@ pgm, png, ppm, raw, sgi, tga i tif.
 
 %package devel
 Summary:	DevIL devel files
-Summary(pl.UTF-8):   Nagłówki DevIL
+Summary(pl.UTF-8):	Nagłówki DevIL
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	lcms-devel
@@ -88,7 +88,7 @@ Nagłówki DevIL.
 
 %package doc
 Summary:	DevIL documentation
-Summary(pl.UTF-8):   Dokumentacja DevIL
+Summary(pl.UTF-8):	Dokumentacja DevIL
 Group:		Documentation
 
 %description doc
