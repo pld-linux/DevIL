@@ -4,7 +4,7 @@ Name:		DevIL
 Version:	1.6.6
 %define		manual_version	1.5.5
 %define		docs_version	1.4.0
-Release:	3
+Release:	4
 License:	GPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
@@ -13,6 +13,7 @@ Source1:	http://dl.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
 # Source1-md5:	6bb2ddfcbe09930c48ef84b8f99479fe
 Source2:	http://dl.sourceforge.net/openil/%{name}-Docs-%{docs_version}.zip
 # Source2-md5:	eb1adc2e0ee154a97490b2178d41996a
+Patch0:		%{name}-makefile.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenGL-devel
 BuildRequires:	SDL-devel
@@ -89,6 +90,7 @@ Dokumentacja DevIL.
 
 %prep
 %setup -q -n %{name} -a1 -a2
+%patch0 -p1
 
 #cp %{SOURCE1} %{SOURCE2} .
 
