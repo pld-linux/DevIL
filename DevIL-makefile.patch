@@ -1,0 +1,12 @@
+diff -ur DevIL.orig/src-IL/src/Makefile.am DevIL/src-IL/src/Makefile.am
+--- DevIL.orig/src-IL/src/Makefile.am	2007-02-14 12:53:13.000000000 +0100
++++ DevIL/src-IL/src/Makefile.am	2007-02-14 12:53:54.000000000 +0100
+@@ -14,7 +14,7 @@
+ 
+ CFLAGS = @LIBIL_CFLAGS@
+ libIL_la_LDFLAGS = -no-undefined @VERSIONINFO@
+-libIL_la_LIBADD = @LIBPNG@ @LIBJPG@ @LIBTIFF@ @LIBGIF@ @LIBMNG@ @LIBLCMS@
++libIL_la_LIBADD = @LIBPNG@ @LIBJPG@ @LIBTIFF@ @LIBMNG@ @LIBLCMS@
+ 
+ INCLUDES = -I$(top_srcdir)/include -I$(top_srcdir)/src-IL/include
+ 
