@@ -5,7 +5,7 @@ Version:	1.6.8
 %define		_rc	rc2
 %define		manual_version	1.5.5
 %define		docs_version	1.6.5
-Release:	0.%{_rc}.1
+Release:	0.%{_rc}.2
 License:	LGPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}-%{_rc}.tar.bz2
@@ -15,6 +15,7 @@ Source1:	http://dl.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
 Source2:	http://dl.sourceforge.net/openil/%{name}-docs.tar.gz
 # Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
 Patch0:		%{name}-typo.patch
+Patch1:		%{name}-c++.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
@@ -98,6 +99,7 @@ Dokumentacja DevIL.
 %prep
 %setup -q -a1 -a2
 %patch0 -p1
+%patch1 -p1
 
 # just SDL and messing libtool macros
 rm -f acinclude.m4
