@@ -15,8 +15,6 @@ Source1:	http://dl.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
 Source2:	http://dl.sourceforge.net/openil/%{name}-docs.tar.gz
 # Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
 Patch0:		%{name}-typo.patch
-# no longer needed ? - check
-#Patch0:		%{name}-link.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
