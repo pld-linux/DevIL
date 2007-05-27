@@ -1,0 +1,368 @@
+--- DevIL-1.6.8/include/IL/devil_internal_exports.h.orig	2006-07-15 10:24:39.000000000 +0200
++++ DevIL-1.6.8/include/IL/devil_internal_exports.h	2007-05-27 22:12:43.671899058 +0200
+@@ -91,7 +91,7 @@
+ #endif
+ 
+ // Internal library functions in IL
+-ILAPI ILimage* ILAPIENTRY ilGetCurImage(ILvoid);
++ILAPI ILimage* ILAPIENTRY ilGetCurImage(void);
+ ILAPI ILvoid   ILAPIENTRY ilSetCurImage(ILimage *Image);
+ ILAPI ILvoid   ILAPIENTRY ilSetError(ILenum Error);
+ ILAPI ILvoid   ILAPIENTRY ilSetPal(ILpal *Pal);
+@@ -113,15 +113,15 @@
+ //
+ // Image functions
+ //
+-ILAPI ILvoid    ILAPIENTRY iBindImageTemp  (ILvoid);
++ILAPI ILvoid    ILAPIENTRY iBindImageTemp  (void);
+ ILAPI ILboolean ILAPIENTRY ilClearImage_   (ILimage *Image);
+ ILAPI ILvoid    ILAPIENTRY ilCloseImage    (ILimage *Image);
+ ILAPI ILvoid    ILAPIENTRY ilClosePal      (ILpal *Palette);
+-ILAPI ILpal*    ILAPIENTRY iCopyPal        (ILvoid);
++ILAPI ILpal*    ILAPIENTRY iCopyPal        (void);
+ ILAPI ILboolean ILAPIENTRY ilCopyImageAttr (ILimage *Dest, ILimage *Src);
+ ILAPI ILimage*  ILAPIENTRY ilCopyImage_    (ILimage *Src);
+ ILAPI ILvoid    ILAPIENTRY ilGetClear      (ILvoid *Colours, ILenum Format, ILenum Type);
+-ILAPI ILuint    ILAPIENTRY ilGetCurName    (ILvoid);
++ILAPI ILuint    ILAPIENTRY ilGetCurName    (void);
+ ILAPI ILboolean ILAPIENTRY ilIsValidPal    (ILpal *Palette);
+ ILAPI ILimage*  ILAPIENTRY ilNewImage      (ILuint Width, ILuint Height, ILuint Depth, ILubyte Bpp, ILubyte Bpc);
+ ILAPI ILimage*  ILAPIENTRY ilNewImageFull  (ILuint Width, ILuint Height, ILuint Depth, ILubyte Bpp, ILenum Format, ILenum Type, ILvoid *Data);
+--- DevIL-1.6.8/include/IL/il.h.orig	2006-08-10 15:20:10.000000000 +0200
++++ DevIL-1.6.8/include/IL/il.h	2007-05-27 22:13:47.718809997 +0200
+@@ -445,15 +445,15 @@
+ ILAPI ILvoid    ILAPIENTRY ilBindImage(ILuint Image);
+ ILAPI ILboolean ILAPIENTRY ilBlit(ILuint Source, ILint DestX, ILint DestY, ILint DestZ, ILuint SrcX, ILuint SrcY, ILuint SrcZ, ILuint Width, ILuint Height, ILuint Depth);
+ ILAPI ILvoid    ILAPIENTRY ilClearColour(ILclampf Red, ILclampf Green, ILclampf Blue, ILclampf Alpha);
+-ILAPI ILboolean ILAPIENTRY ilClearImage(ILvoid);
+-ILAPI ILuint    ILAPIENTRY ilCloneCurImage(ILvoid);
++ILAPI ILboolean ILAPIENTRY ilClearImage(void);
++ILAPI ILuint    ILAPIENTRY ilCloneCurImage(void);
+ ILAPI ILboolean ILAPIENTRY ilCompressFunc(ILenum Mode);
+ ILAPI ILboolean ILAPIENTRY ilConvertImage(ILenum DestFormat, ILenum DestType);
+ ILAPI ILboolean ILAPIENTRY ilConvertPal(ILenum DestFormat);
+ ILAPI ILboolean ILAPIENTRY ilCopyImage(ILuint Src);
+ ILAPI ILuint    ILAPIENTRY ilCopyPixels(ILuint XOff, ILuint YOff, ILuint ZOff, ILuint Width, ILuint Height, ILuint Depth, ILenum Format, ILenum Type, ILvoid *Data);
+ ILAPI ILuint    ILAPIENTRY ilCreateSubImage(ILenum Type, ILuint Num);
+-ILAPI ILboolean ILAPIENTRY ilDefaultImage(ILvoid);
++ILAPI ILboolean ILAPIENTRY ilDefaultImage(void);
+ ILAPI ILvoid    ILAPIENTRY ilDeleteImage(const ILuint Num);
+ ILAPI ILvoid    ILAPIENTRY ilDeleteImages(ILsizei Num, const ILuint *Images);
+ ILAPI ILboolean ILAPIENTRY ilDisable(ILenum Mode);
+@@ -464,16 +464,16 @@
+ ILAPI ILubyte*  ILAPIENTRY ilGetAlpha(ILenum Type);
+ ILAPI ILboolean ILAPIENTRY ilGetBoolean(ILenum Mode);
+ ILAPI ILvoid    ILAPIENTRY ilGetBooleanv(ILenum Mode, ILboolean *Param);
+-ILAPI ILubyte*  ILAPIENTRY ilGetData(ILvoid);
++ILAPI ILubyte*  ILAPIENTRY ilGetData(void);
+ ILAPI ILuint    ILAPIENTRY ilGetDXTCData(ILvoid *Buffer, ILuint BufferSize, ILenum DXTCFormat);
+-ILAPI ILenum    ILAPIENTRY ilGetError(ILvoid);
++ILAPI ILenum    ILAPIENTRY ilGetError(void);
+ ILAPI ILint     ILAPIENTRY ilGetInteger(ILenum Mode);
+ ILAPI ILvoid    ILAPIENTRY ilGetIntegerv(ILenum Mode, ILint *Param);
+-ILAPI ILuint    ILAPIENTRY ilGetLumpPos(ILvoid);
+-ILAPI ILubyte*  ILAPIENTRY ilGetPalette(ILvoid);
++ILAPI ILuint    ILAPIENTRY ilGetLumpPos(void);
++ILAPI ILubyte*  ILAPIENTRY ilGetPalette(void);
+ ILAPI ILstring  ILAPIENTRY ilGetString(ILenum StringName);
+ ILAPI ILvoid    ILAPIENTRY ilHint(ILenum Target, ILenum Mode);
+-ILAPI ILvoid    ILAPIENTRY ilInit(ILvoid);
++ILAPI ILvoid    ILAPIENTRY ilInit(void);
+ ILAPI ILboolean ILAPIENTRY ilIsDisabled(ILenum Mode);
+ ILAPI ILboolean ILAPIENTRY ilIsEnabled(ILenum Mode);
+ ILAPI ILboolean ILAPIENTRY ilIsImage(ILuint Image);
+@@ -489,7 +489,7 @@
+ ILAPI ILvoid    ILAPIENTRY ilModAlpha( ILdouble AlphaValue );
+ ILAPI ILboolean ILAPIENTRY ilOriginFunc(ILenum Mode);
+ ILAPI ILboolean ILAPIENTRY ilOverlayImage(ILuint Source, ILint XCoord, ILint YCoord, ILint ZCoord);
+-ILAPI ILvoid    ILAPIENTRY ilPopAttrib(ILvoid);
++ILAPI ILvoid    ILAPIENTRY ilPopAttrib(void);
+ ILAPI ILvoid    ILAPIENTRY ilPushAttrib(ILuint Bits);
+ ILAPI ILvoid    ILAPIENTRY ilRegisterFormat(ILenum Format);
+ ILAPI ILboolean ILAPIENTRY ilRegisterLoad(const ILstring Ext, IL_LOADPROC Load);
+@@ -501,9 +501,9 @@
+ ILAPI ILvoid    ILAPIENTRY ilRegisterType(ILenum Type);
+ ILAPI ILboolean ILAPIENTRY ilRemoveLoad(const ILstring Ext);
+ ILAPI ILboolean ILAPIENTRY ilRemoveSave(const ILstring Ext);
+-ILAPI ILvoid    ILAPIENTRY ilResetMemory(ILvoid);
+-ILAPI ILvoid    ILAPIENTRY ilResetRead(ILvoid);
+-ILAPI ILvoid    ILAPIENTRY ilResetWrite(ILvoid);
++ILAPI ILvoid    ILAPIENTRY ilResetMemory(void);
++ILAPI ILvoid    ILAPIENTRY ilResetRead(void);
++ILAPI ILvoid    ILAPIENTRY ilResetWrite(void);
+ ILAPI ILboolean ILAPIENTRY ilSave(ILenum Type, ILstring FileName);
+ ILAPI ILuint    ILAPIENTRY ilSaveF(ILenum Type, ILHANDLE File);
+ ILAPI ILboolean ILAPIENTRY ilSaveImage(const ILstring FileName);
+@@ -518,7 +518,7 @@
+ ILAPI ILvoid    ILAPIENTRY ilSetRead(fOpenRProc, fCloseRProc, fEofProc, fGetcProc, fReadProc, fSeekRProc, fTellRProc);
+ ILAPI ILvoid    ILAPIENTRY ilSetString(ILenum Mode, const char *String);
+ ILAPI ILvoid    ILAPIENTRY ilSetWrite(fOpenWProc, fCloseWProc, fPutcProc, fSeekWProc, fTellWProc, fWriteProc);
+-ILAPI ILvoid    ILAPIENTRY ilShutDown(ILvoid);
++ILAPI ILvoid    ILAPIENTRY ilShutDown(void);
+ ILAPI ILboolean ILAPIENTRY ilTexImage(ILuint Width, ILuint Height, ILuint Depth, ILubyte numChannels, ILenum Format, ILenum Type, ILvoid *Data);
+ ILAPI ILenum    ILAPIENTRY ilTypeFromExt(const ILstring FileName);
+ ILAPI ILboolean ILAPIENTRY ilTypeFunc(ILenum Mode);
+--- DevIL-1.6.8/include/IL/il_wrap.h.orig	2006-07-02 12:04:36.000000000 +0200
++++ DevIL-1.6.8/include/IL/il_wrap.h	2007-05-27 22:18:29.574540261 +0200
+@@ -1,9 +1,9 @@
+ #ifndef WRAPPER_H
+ #define WRAPPER_H
+ 
+-/*#include <il/il.h>
+-#include <il/ilu.h>*/
+-#include <il/ilut.h>  // Probably only have to #include this one
++/*#include <IL/il.h>
++#include <IL/ilu.h>*/
++#include <IL/ilut.h>  // Probably only have to #include this one
+ 
+ #ifdef _MSC_VER
+ 	#ifndef _IL_WRAP_BUILD_LIB
+@@ -29,44 +29,44 @@ public:
+ 	ILboolean	ActiveImage(ILuint);
+ 	ILboolean	ActiveLayer(ILuint);
+ 	ILboolean	ActiveMipmap(ILuint);
+-	ILboolean	Clear(ILvoid);
++	ILboolean	Clear(void);
+ 	ILvoid		ClearColour(ILclampf, ILclampf, ILclampf, ILclampf);
+ 	ILboolean	Convert(ILenum);
+ 	ILboolean	Copy(ILuint);
+-	ILboolean	Default(ILvoid);
+-	ILboolean	Flip(ILvoid);
+-	ILboolean	SwapColours(ILvoid);
++	ILboolean	Default(void);
++	ILboolean	Flip(void);
++	ILboolean	SwapColours(void);
+ 	ILboolean	Resize(ILuint, ILuint, ILuint);
+ 	ILboolean	TexImage(ILuint, ILuint, ILuint, ILubyte, ILenum, ILenum, ILvoid*);
+ 
+ 	
+ 	// Image handling
+-	ILvoid		Bind(ILvoid) const;
++	ILvoid		Bind(void) const;
+ 	ILvoid		Bind(ILuint);
+-	ILvoid		Close(ILvoid) { this->Delete(); }
+-	ILvoid		Delete(ILvoid);
++	ILvoid		Close(void) { this->Delete(); }
++	ILvoid		Delete(void);
+ 	ILvoid		iGenBind();
+ 	ILenum		PaletteAlphaIndex();
+ 
+ 	// Image characteristics
+-	ILuint		Width(ILvoid);
+-	ILuint		Height(ILvoid);
+-	ILuint		Depth(ILvoid);
+-	ILubyte		Bpp(ILvoid);
+-	ILubyte		Bitpp(ILvoid);
+-	ILenum		PaletteType(ILvoid);
+-	ILenum		Format(ILvoid);
+-	ILenum		Type(ILvoid);
+-	ILuint		NumImages(ILvoid);
+-	ILuint		NumMipmaps(ILvoid);
+-	ILuint		GetId(ILvoid) const;
+-    ILenum      GetOrigin(ILvoid);
+-	ILubyte		*GetData(ILvoid);
+-	ILubyte		*GetPalette(ILvoid);
++	ILuint		Width(void);
++	ILuint		Height(void);
++	ILuint		Depth(void);
++	ILubyte		Bpp(void);
++	ILubyte		Bitpp(void);
++	ILenum		PaletteType(void);
++	ILenum		Format(void);
++	ILenum		Type(void);
++	ILuint		NumImages(void);
++	ILuint		NumMipmaps(void);
++	ILuint		GetId(void) const;
++    ILenum      GetOrigin(void);
++	ILubyte		*GetData(void);
++	ILubyte		*GetPalette(void);
+ 
+ 
+ 	// Rendering
+-	ILuint		BindImage(ILvoid);
++	ILuint		BindImage(void);
+ 	ILuint		BindImage(ILenum);
+ 
+ 
+@@ -111,12 +111,12 @@ public:
+ class ilOgl
+ {
+ public:
+-	static ILvoid		Init(ILvoid);
++	static ILvoid		Init(void);
+ 	static GLuint		BindTex(ilImage &);
+ 	static ILboolean	Upload(ilImage &, ILuint);
+ 	static GLuint		Mipmap(ilImage &);
+-	static ILboolean	Screen(ILvoid);
+-	static ILboolean	Screenie(ILvoid);
++	static ILboolean	Screen(void);
++	static ILboolean	Screenie(void);
+ };
+ #endif//ILUT_USE_OPENGL
+ 
+@@ -125,7 +125,7 @@ public:
+ class ilAlleg
+ {
+ public:
+-	static ILvoid	Init(ILvoid);
++	static ILvoid	Init(void);
+ 	static BITMAP	*Convert(ilImage &);
+ };
+ #endif//ILUT_USE_ALLEGRO
+@@ -135,7 +135,7 @@ public:
+ class ilWin32
+ {
+ public:
+-	static ILvoid		Init(ILvoid);
++	static ILvoid		Init(void);
+ 	static HBITMAP		Convert(ilImage &);
+ 	static ILboolean	GetClipboard(ilImage &);
+ 	static ILvoid		GetInfo(ilImage &, BITMAPINFO *Info);
+@@ -175,7 +175,7 @@ public:
+ 	static ILboolean		IsDisabled(ILenum);
+ 	static ILboolean		IsEnabled(ILenum);
+ 	static ILboolean		Origin(ILenum);
+-	static ILvoid			Pop(ILvoid);
++	static ILvoid			Pop(void);
+ 	static ILvoid			Push(ILuint);
+ 
+ 
+@@ -191,8 +191,8 @@ class ilError
+ public:
+ 	static ILvoid		Check(ILvoid (*Callback)(const char*));
+ 	static ILvoid		Check(ILvoid (*Callback)(ILenum));
+-	static ILenum		Get(ILvoid);
+-	static const char	*String(ILvoid);
++	static ILenum		Get(void);
++	static const char	*String(void);
+ 	static const char	*String(ILenum);
+ 
+ protected:
+@@ -202,4 +202,4 @@ private:
+ };
+ 
+ 
+-#endif//WRAPPER_H
+\ Brak znaku nowej linii na koñcu pliku
++#endif//WRAPPER_H
+--- DevIL-1.6.8/include/IL/ilu.h.orig	2006-08-16 11:18:21.000000000 +0200
++++ DevIL-1.6.8/include/IL/ilu.h	2007-05-27 22:15:49.968968849 +0200
+@@ -122,37 +122,37 @@
+ 
+ 
+ // ImageLib Utility Functions
+-ILAPI ILboolean      ILAPIENTRY iluAlienify(ILvoid);
++ILAPI ILboolean      ILAPIENTRY iluAlienify(void);
+ ILAPI ILboolean      ILAPIENTRY iluBlurAvg(ILuint Iter);
+ ILAPI ILboolean      ILAPIENTRY iluBlurGaussian(ILuint Iter);
+-ILAPI ILboolean      ILAPIENTRY iluBuildMipmaps(ILvoid);
+-ILAPI ILuint         ILAPIENTRY iluColoursUsed(ILvoid);
++ILAPI ILboolean      ILAPIENTRY iluBuildMipmaps(void);
++ILAPI ILuint         ILAPIENTRY iluColoursUsed(void);
+ ILAPI ILboolean      ILAPIENTRY iluCompareImage(ILuint Comp);
+ ILAPI ILboolean      ILAPIENTRY iluContrast(ILfloat Contrast);
+ ILAPI ILboolean      ILAPIENTRY iluCrop(ILuint XOff, ILuint YOff, ILuint ZOff, ILuint Width, ILuint Height, ILuint Depth);
+ ILAPI ILvoid         ILAPIENTRY iluDeleteImage(ILuint Id);
+-ILAPI ILboolean      ILAPIENTRY iluEdgeDetectE(ILvoid);
+-ILAPI ILboolean      ILAPIENTRY iluEdgeDetectP(ILvoid);
+-ILAPI ILboolean      ILAPIENTRY iluEdgeDetectS(ILvoid);
+-ILAPI ILboolean      ILAPIENTRY iluEmboss(ILvoid);
++ILAPI ILboolean      ILAPIENTRY iluEdgeDetectE(void);
++ILAPI ILboolean      ILAPIENTRY iluEdgeDetectP(void);
++ILAPI ILboolean      ILAPIENTRY iluEdgeDetectS(void);
++ILAPI ILboolean      ILAPIENTRY iluEmboss(void);
+ ILAPI ILboolean      ILAPIENTRY iluEnlargeCanvas(ILuint Width, ILuint Height, ILuint Depth);
+ ILAPI ILboolean      ILAPIENTRY iluEnlargeImage(ILfloat XDim, ILfloat YDim, ILfloat ZDim);
+-ILAPI ILboolean      ILAPIENTRY iluEqualize(ILvoid);
++ILAPI ILboolean      ILAPIENTRY iluEqualize(void);
+ ILAPI ILstring 		 ILAPIENTRY iluErrorString(ILenum Error);
+ ILAPI ILboolean      ILAPIENTRY iluConvolution(ILint *matrix, ILint scale, ILint bias);
+-ILAPI ILboolean      ILAPIENTRY iluFlipImage(ILvoid);
++ILAPI ILboolean      ILAPIENTRY iluFlipImage(void);
+ ILAPI ILboolean      ILAPIENTRY iluGammaCorrect(ILfloat Gamma);
+-ILAPI ILuint         ILAPIENTRY iluGenImage(ILvoid);
++ILAPI ILuint         ILAPIENTRY iluGenImage(void);
+ ILAPI ILvoid         ILAPIENTRY iluGetImageInfo(ILinfo *Info);
+ ILAPI ILint          ILAPIENTRY iluGetInteger(ILenum Mode);
+ ILAPI ILvoid         ILAPIENTRY iluGetIntegerv(ILenum Mode, ILint *Param);
+ ILAPI ILstring 		 ILAPIENTRY iluGetString(ILenum StringName);
+ ILAPI ILvoid         ILAPIENTRY iluImageParameter(ILenum PName, ILenum Param);
+-ILAPI ILvoid         ILAPIENTRY iluInit(ILvoid);
+-ILAPI ILboolean      ILAPIENTRY iluInvertAlpha(ILvoid);
++ILAPI ILvoid         ILAPIENTRY iluInit(void);
++ILAPI ILboolean      ILAPIENTRY iluInvertAlpha(void);
+ ILAPI ILuint         ILAPIENTRY iluLoadImage(const ILstring FileName);
+-ILAPI ILboolean      ILAPIENTRY iluMirror(ILvoid);
+-ILAPI ILboolean      ILAPIENTRY iluNegative(ILvoid);
++ILAPI ILboolean      ILAPIENTRY iluMirror(void);
++ILAPI ILboolean      ILAPIENTRY iluNegative(void);
+ ILAPI ILboolean      ILAPIENTRY iluNoisify(ILclampf Tolerance);
+ ILAPI ILboolean      ILAPIENTRY iluPixelize(ILuint PixSize);
+ ILAPI ILvoid         ILAPIENTRY iluRegionfv(ILpointf *Points, ILuint n);
+@@ -166,7 +166,7 @@
+ ILAPI ILboolean      ILAPIENTRY iluScaleAlpha(ILfloat scale);
+ ILAPI ILboolean      ILAPIENTRY iluScaleColours(ILfloat r, ILfloat g, ILfloat b);
+ ILAPI ILboolean      ILAPIENTRY iluSharpen(ILfloat Factor, ILuint Iter);
+-ILAPI ILboolean      ILAPIENTRY iluSwapColours(ILvoid);
++ILAPI ILboolean      ILAPIENTRY iluSwapColours(void);
+ ILAPI ILboolean      ILAPIENTRY iluWave(ILfloat Angle);
+ 
+ #define iluColorsUsed   iluColoursUsed
+--- DevIL-1.6.8/include/IL/ilut.h.orig	2007-05-27 22:08:13.200110000 +0200
++++ DevIL-1.6.8/include/IL/ilut.h	2007-05-27 22:16:29.281162835 +0200
+@@ -198,10 +198,10 @@
+ ILAPI ILint			ILAPIENTRY ilutGetInteger(ILenum Mode);
+ ILAPI ILvoid		ILAPIENTRY ilutGetIntegerv(ILenum Mode, ILint *Param);
+ ILAPI ILstring		ILAPIENTRY ilutGetString(ILenum StringName);
+-ILAPI ILvoid		ILAPIENTRY ilutInit(ILvoid);
++ILAPI ILvoid		ILAPIENTRY ilutInit(void);
+ ILAPI ILboolean		ILAPIENTRY ilutIsDisabled(ILenum Mode);
+ ILAPI ILboolean		ILAPIENTRY ilutIsEnabled(ILenum Mode);
+-ILAPI ILvoid		ILAPIENTRY ilutPopAttrib(ILvoid);
++ILAPI ILvoid		ILAPIENTRY ilutPopAttrib(void);
+ ILAPI ILvoid		ILAPIENTRY ilutPushAttrib(ILuint Bits);
+ ILAPI ILvoid		ILAPIENTRY ilutSetInteger(ILenum Mode, ILint Param);
+ 
+@@ -211,11 +211,11 @@
+ // ImageLib Utility Toolkit's OpenGL Functions
+ #ifdef ILUT_USE_OPENGL
+ 	ILAPI GLuint	ILAPIENTRY ilutGLBindTexImage();
+-	ILAPI GLuint	ILAPIENTRY ilutGLBindMipmaps(ILvoid);
+-	ILAPI ILboolean	ILAPIENTRY ilutGLBuildMipmaps(ILvoid);
++	ILAPI GLuint	ILAPIENTRY ilutGLBindMipmaps(void);
++	ILAPI ILboolean	ILAPIENTRY ilutGLBuildMipmaps(void);
+ 	ILAPI GLuint	ILAPIENTRY ilutGLLoadImage(ILstring FileName);
+-	ILAPI ILboolean	ILAPIENTRY ilutGLScreen(ILvoid);
+-	ILAPI ILboolean	ILAPIENTRY ilutGLScreenie(ILvoid);
++	ILAPI ILboolean	ILAPIENTRY ilutGLScreen(void);
++	ILAPI ILboolean	ILAPIENTRY ilutGLScreenie(void);
+ 	ILAPI ILboolean	ILAPIENTRY ilutGLSaveImage(ILstring FileName, GLuint TexID);
+ 	ILAPI ILboolean	ILAPIENTRY ilutGLSetTex(GLuint TexID);
+ 	ILAPI ILboolean	ILAPIENTRY ilutGLTexImage(GLuint Level);
+@@ -249,7 +249,7 @@
+ 
+ // ImageLib Utility Toolkit's BeOS Functions
+ #ifdef  ILUT_USE_BEOS
+-	ILAPI BBitmap ILAPIENTRY ilutConvertToBBitmap(ILvoid);
++	ILAPI BBitmap ILAPIENTRY ilutConvertToBBitmap(void);
+ #endif//ILUT_USE_BEOS
+ 
+ 
+@@ -259,13 +259,13 @@
+ 	ILAPI HBITMAP	ILAPIENTRY ilutConvertSliceToHBitmap(HDC hDC, ILuint slice);
+ 	ILAPI ILvoid	ILAPIENTRY ilutFreePaddedData(ILubyte *Data);
+ 	ILAPI ILvoid	ILAPIENTRY ilutGetBmpInfo(BITMAPINFO *Info);
+-	ILAPI HPALETTE	ILAPIENTRY ilutGetHPal(ILvoid);
+-	ILAPI ILubyte*	ILAPIENTRY ilutGetPaddedData(ILvoid);
+-	ILAPI ILboolean	ILAPIENTRY ilutGetWinClipboard(ILvoid);
++	ILAPI HPALETTE	ILAPIENTRY ilutGetHPal(void);
++	ILAPI ILubyte*	ILAPIENTRY ilutGetPaddedData(void);
++	ILAPI ILboolean	ILAPIENTRY ilutGetWinClipboard(void);
+ 	ILAPI ILboolean	ILAPIENTRY ilutLoadResource(HINSTANCE hInst, ILint ID, ILstring ResourceType, ILenum Type);
+ 	ILAPI ILboolean	ILAPIENTRY ilutSetHBitmap(HBITMAP Bitmap);
+ 	ILAPI ILboolean	ILAPIENTRY ilutSetHPal(HPALETTE Pal);
+-	ILAPI ILboolean	ILAPIENTRY ilutSetWinClipboard(ILvoid);
++	ILAPI ILboolean	ILAPIENTRY ilutSetWinClipboard(void);
+ 	ILAPI HBITMAP	ILAPIENTRY ilutWinLoadImage(ILstring FileName, HDC hDC);
+ 	ILAPI ILboolean	ILAPIENTRY ilutWinLoadUrl(ILstring Url);
+ 	ILAPI ILboolean ILAPIENTRY ilutWinPrint(ILuint XPos, ILuint YPos, ILuint Width, ILuint Height, HDC hDC);
