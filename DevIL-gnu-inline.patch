@@ -1,0 +1,27 @@
+--- DevIL-1.7.2/configure.ac.orig	2008-10-22 22:30:53.081626650 +0200
++++ DevIL-1.7.2/configure.ac	2008-10-22 22:44:29.328824639 +0200
+@@ -75,11 +75,23 @@
+ 	[AC_DEFINE(RESTRICT_KEYWORD,,restric keyword available)]
+ 	[AC_MSG_RESULT(yes)]
+ 	[CFLAGS="$TMP_CFLAGS"]
+-	[ADD_CFLAGS(-std=gnu99 -fgnu89-inline)]
++	[ADD_CFLAGS(-std=gnu99)]
+ 	,[AC_MSG_RESULT(no)]
+ 	 [CFLAGS="$TMP_CFLAGS"])
+ ])
+ 
++dnl checking if the -fgnu89-inline flag is available
++TMP_CFLAGS="$CFLAGS"
++CFLAGS="$CFLAGS -fgnu89-inline"
++AC_MSG_CHECKING([gnu89-inline option])
++AC_COMPILE_IFELSE([[void main(void){}]],
++	[AC_MSG_RESULT(yes)]
++	[CFLAGS="$TMP_CFLAGS"]
++	[ADD_CFLAGS(-fgnu89-inline)]
++	,[AC_MSG_RESULT(no)]
++	 [CFLAGS="$TMP_CFLAGS"])
++
++
+ dnl must add AC_CACHE_CHECK support where possible
+ 
+ AM_INIT_AUTOMAKE("DevIL", $DEVIL_MAJOR.$DEVIL_MINOR.$DEVIL_REVISION)
