@@ -15,6 +15,7 @@ Source2:	http://dl.sourceforge.net/openil/%{name}-docs.tar.gz
 # Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
 Patch0:		%{name}-c++.patch
 Patch1:		%{name}-link.patch
+Patch2:		%{name}-gnu-inline.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
@@ -101,6 +102,7 @@ Dokumentacja DevIL.
 %setup -q -c -a1 -a2
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # just SDL and messing libtool macros
 rm -f acinclude.m4
