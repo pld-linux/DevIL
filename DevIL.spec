@@ -1,27 +1,27 @@
 Summary:	Full featured image library
 Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
 Name:		DevIL
-Version:	1.6.8
-%define		_rc	rc2
+Version:	1.7.2
 %define		manual_version	1.5.5
 %define		docs_version	1.6.5
-Release:	0.%{_rc}.2
-License:	LGPL
+Release:	1
+License:	LGPL v2.1
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}-%{_rc}.tar.bz2
-# Source0-md5:	444f1290a4688c4530b9d07a521da212
+Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
+# Source0-md5:	67d669df245c846ec9f54dfc086a00b6
 Source1:	http://dl.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
 # Source1-md5:	6bb2ddfcbe09930c48ef84b8f99479fe
 Source2:	http://dl.sourceforge.net/openil/%{name}-docs.tar.gz
 # Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
-Patch0:		%{name}-typo.patch
-Patch1:		%{name}-c++.patch
+Patch0:		%{name}-c++.patch
+Patch1:		%{name}-link.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
 BuildRequires:	allegro-devel >= 4.1.16
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
+BuildRequires:	jasper-devel
 BuildRequires:	lcms-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
@@ -43,9 +43,9 @@ performed. DevIL utilizes a simple, yet powerful, syntax. DevIL can
 load, save, convert, manipulate, filter and display a wide variety of
 image formats.
 
-Currently, DevIL can load .bmp, .cut, .dds, .doom, .gif, .ico, .jpg,
-.lbm, .mdl, .mng, .pal, .pbm, .pcd, .pcx, .pgm, .pic, .png, .ppm,
-.psd, .psp, .raw, .sgi, .tga and .tif files.
+Currently, DevIL can load .bmp, .cut, .dds, .doom, .gif, .ico, .icns,
+.jp2, .jpg, .lbm, .mdl, .mng, .pal, .pbm, .pcd, .pcx, .pgm, .pic,
+.png, .ppm, .psd, .psp, .raw, .sgi, .tga and .tif files.
 
 Formats supported for saving include .bmp, .dds, .h, .jpg, .pal, .pbm,
 .pcx, .pgm, .png, .ppm, .raw, .sgi, .tga and .tif.
@@ -61,8 +61,8 @@ potężnej składni poleceń, wzorowanej na OpenGL-u. DevIL potrafi
 wachlarz formatów plików graficznych.
 
 W chwili obecnej DevIL odczytuje pliki z rozszerzeniami bmp, cut, dds,
-doom, gif, ico, jpg, lbm, mdl, mng, pal, pbm, pcd, pcx, pgm, pic, png,
-ppm, psd, psp, raw, sgi, tga i tif.
+doom, gif, icns, ico, jp2, jpg, lbm, mdl, mng, pal, pbm, pcd, pcx,
+pgm, pic, png, ppm, psd, psp, raw, sgi, tga i tif.
 
 Wspierane jest zapisywanie do plików bmp, dds, h, jpg, pal, pbm, pcx,
 pgm, png, ppm, raw, sgi, tga i tif.
@@ -72,6 +72,7 @@ Summary:	DevIL devel files
 Summary(pl.UTF-8):	Nagłówki DevIL
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	jasper-devel
 Requires:	lcms-devel
 Requires:	libjpeg-devel
 Requires:	libmng-devel
@@ -97,7 +98,7 @@ DevIL documentation.
 Dokumentacja DevIL.
 
 %prep
-%setup -q -a1 -a2
+%setup -q -c -a1 -a2
 %patch0 -p1
 %patch1 -p1
 
@@ -108,7 +109,10 @@ rm -f acinclude.m4
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
+%{__autoheader}
 %{__automake}
+# actual exr support missing in sources, only adds undefined symbol
+CPPFLAGS="%{rpmcppflags} -DIL_NO_EXR"
 %configure \
 	%{?debug:--disable-release}
 %{__make}
@@ -129,8 +133,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS CREDITS ChangeLog README.unix
 %attr(755,root,root) %{_libdir}/libIL.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libIL.so.1
 %attr(755,root,root) %{_libdir}/libILU.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libILU.so.1
 %attr(755,root,root) %{_libdir}/libILUT.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libILUT.so.1
 
 %files devel
 %defattr(644,root,root,755)
