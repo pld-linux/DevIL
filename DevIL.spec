@@ -4,7 +4,7 @@ Name:		DevIL
 Version:	1.7.2
 %define		manual_version	1.5.5
 %define		docs_version	1.6.5
-Release:	1
+Release:	2
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
