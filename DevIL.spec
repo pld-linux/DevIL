@@ -30,6 +30,7 @@ BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	unzip
+BuildRequires:	which
 Requires:	allegro >= 4.1.16
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
