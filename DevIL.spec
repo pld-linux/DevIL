@@ -4,7 +4,7 @@ Name:		DevIL
 Version:	1.7.2
 %define		manual_version	1.5.5
 %define		docs_version	1.6.5
-Release:	3
+Release:	4
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
@@ -16,6 +16,7 @@ Source2:	http://dl.sourceforge.net/openil/%{name}-docs.tar.gz
 Patch0:		%{name}-c++.patch
 Patch1:		%{name}-link.patch
 Patch2:		%{name}-gnu-inline.patch
+Patch3:		libpng14.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
@@ -29,6 +30,8 @@ BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:1.5
+BuildRequires:	rpmbuild(macros) >= 1.533
+BuildRequires:	sed >= 4.0
 BuildRequires:	unzip
 BuildRequires:	which
 Requires:	allegro >= 4.1.16
@@ -104,6 +107,9 @@ Dokumentacja DevIL.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%undos src-IL/src/il_png.c
+%undos src-IL/src/il_icon.c
+%patch3 -p1
 
 # just SDL and messing libtool macros
 rm -f acinclude.m4
