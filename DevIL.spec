@@ -15,9 +15,8 @@ Source1:	http://downloads.sourceforge.net/openil/%{name}-Manual-%{manual_version
 # Source1-md5:	6bb2ddfcbe09930c48ef84b8f99479fe
 Source2:	http://downloads.sourceforge.net/openil/%{name}-docs.tar.gz
 # Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
-Patch0:		%{name}-link.patch
-Patch1:		%{name}-gnu-inline.patch
-Patch2:		libpng14.patch
+Patch0:		%{name}-gnu-inline.patch
+Patch1:		libpng14.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
@@ -106,8 +105,7 @@ Dokumentacja DevIL.
 %prep
 %setup -q -c -a1 -a2
 #%%patch0 -p1
-#%%patch1 -p1
-%patch3 -p1
+%patch1 -p1
 
 # lpng12 -> lpng
 %{__sed} -i 's,png12,png,' devil-%{version}/m4/devil-definitions.m4
