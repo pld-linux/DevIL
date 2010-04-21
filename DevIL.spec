@@ -1,3 +1,6 @@
+#
+# TODO: package rest of files
+#
 %define		manual_version	1.5.5
 Summary:	Full featured image library
 Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
