@@ -1,17 +1,19 @@
+#
+# TODO: - check and fix patches if possible
+#
+%define		manual_version	1.5.5
 Summary:	Full featured image library
 Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
 Name:		DevIL
-Version:	1.7.2
-%define		manual_version	1.5.5
-%define		docs_version	1.6.5
-Release:	5
+Version:	1.7.8
+Release:	0.1
 License:	LGPL v2.1
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/openil/%{name}-%{version}.tar.gz
-# Source0-md5:	67d669df245c846ec9f54dfc086a00b6
-Source1:	http://dl.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
+Source0:	http://downloads.sourceforge.net/openil/%{name}-%{version}.tar.gz
+# Source0-md5:	7918f215524589435e5ec2e8736d5e1d
+Source1:	http://downloads.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
 # Source1-md5:	6bb2ddfcbe09930c48ef84b8f99479fe
-Source2:	http://dl.sourceforge.net/openil/%{name}-docs.tar.gz
+Source2:	http://downloads.sourceforge.net/openil/%{name}-docs.tar.gz
 # Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
 Patch0:		%{name}-c++.patch
 Patch1:		%{name}-link.patch
@@ -104,32 +106,38 @@ Dokumentacja DevIL.
 
 %prep
 %setup -q -c -a1 -a2
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%undos src-IL/src/il_png.c
-%undos src-IL/src/il_icon.c
+#%%patch0 -p1
+#%%patch1 -p1
+#%%patch2 -p1
+#%%undos devil-%{version}/src-IL/src/il_png.c
+#%%undos devil-%{version}/src-IL/src/il_icon.c
 %patch3 -p1
+
+# lpng12 -> lpng
+%{__sed} -i 's,png12,png,' devil-%{version}/m4/devil-definitions.m4
 
 # just SDL and messing libtool macros
 rm -f acinclude.m4
 
 %build
+cd devil-%{version}
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
 # actual exr support missing in sources, only adds undefined symbol
 CPPFLAGS="%{rpmcppflags} -DIL_NO_EXR"
 %configure \
+	--enable-ILU=yes \
+	--enable-ILUT=yes \
 	%{?debug:--disable-release}
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C devil-%{version} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
@@ -140,7 +148,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CREDITS ChangeLog README.unix
+%doc devil-%{version}/{AUTHORS,CREDITS,ChangeLog,README.unix}
 %attr(755,root,root) %{_libdir}/libIL.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libIL.so.1
 %attr(755,root,root) %{_libdir}/libILU.so.*.*.*
