@@ -1,12 +1,9 @@
-#
-# TODO: - check and fix patches if possible
-#
 %define		manual_version	1.5.5
 Summary:	Full featured image library
 Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
 Name:		DevIL
 Version:	1.7.8
-Release:	0.1
+Release:	1
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/openil/%{name}-%{version}.tar.gz
@@ -104,7 +101,7 @@ Dokumentacja DevIL.
 
 %prep
 %setup -q -c -a1 -a2
-#%%patch0 -p1
+%patch0 -p1
 %patch1 -p1
 
 # lpng12 -> lpng
