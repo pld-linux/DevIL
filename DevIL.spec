@@ -30,10 +30,10 @@ BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:1.5
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.533
 BuildRequires:	sed >= 4.0
 BuildRequires:	unzip
-BuildRequires:	which
 Requires:	allegro >= 4.1.16
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
