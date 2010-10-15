@@ -1,6 +1,4 @@
-#
-# TODO: package rest of files
-#
+# TODO: libsquish http://code.google.com/p/libsquish/
 %define		manual_version	1.5.5
 Summary:	Full featured image library
 Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
@@ -15,9 +13,9 @@ Source1:	http://downloads.sourceforge.net/openil/%{name}-Manual-%{manual_version
 # Source1-md5:	6bb2ddfcbe09930c48ef84b8f99479fe
 Source2:	http://downloads.sourceforge.net/openil/%{name}-docs.tar.gz
 # Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
-Patch0:		%{name}-gnu-inline.patch
-Patch1:		libpng14.patch
+Patch0:		libpng14.patch
 URL:		http://openil.sourceforge.net/
+BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
 BuildRequires:	allegro-devel >= 4.1.16
@@ -34,7 +32,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.533
 BuildRequires:	sed >= 4.0
 BuildRequires:	unzip
-Requires:	allegro >= 4.1.16
+BuildRequires:	xorg-lib-libXext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
@@ -69,27 +67,82 @@ W chwili obecnej DevIL odczytuje pliki z rozszerzeniami bmp, cut, dds,
 doom, gif, icns, ico, jp2, jpg, lbm, mdl, mng, pal, pbm, pcd, pcx,
 pgm, pic, png, ppm, psd, psp, raw, sgi, tga i tif.
 
-Wspierane jest zapisywanie do plików bmp, dds, h, jpg, pal, pbm, pcx,
-pgm, png, ppm, raw, sgi, tga i tif.
+Obsługiwane jest zapisywanie do plików bmp, dds, h, jpg, pal, pbm,
+pcx, pgm, png, ppm, raw, sgi, tga i tif.
 
 %package devel
-Summary:	DevIL devel files
-Summary(pl.UTF-8):	Nagłówki DevIL
+Summary:	DevIL development files
+Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek DevIL
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	OpenEXR-devel
 Requires:	jasper-devel
 Requires:	lcms-devel
 Requires:	libjpeg-devel
 Requires:	libmng-devel
 Requires:	libpng-devel
 Requires:	libtiff-devel
-# libILUT additionally: SDL-devel, allegro-devel, OpenGL-GLU-devel
 
 %description devel
-DevIL devel files.
+DevIL development files (for IL and ILU libraries).
 
 %description devel -l pl.UTF-8
-Nagłówki DevIL.
+Pliki nagłówkowe bibliotek DevIL (IL i ILU).
+
+%package static
+Summary:	Static DevIL libraries
+Summary(pl.UTF-8):	Statyczne biblioteki DevIL
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static DevIL libraries (IL and ILU).
+
+%description static -l pl.UTF-8
+Statyczne biblioteki DevIL (IL i ILU).
+
+%package ILUT
+Summary:	DevIL ILUT library
+Summary(pl.UTF-8):	Biblioteka DevIL ILUT
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	SDL >= 1.2.5
+Requires:	allegro >= 4.1.16
+
+%description ILUT
+DevIL ILUT library - connection to higher level libraries.
+
+%description ILUT
+Biblioteka DevIL ILUT - łącznik z bibliotekami wyższego poziomu.
+
+%package ILUT-devel
+Summary:	Development files for DevIL ILUT library
+Summary(pl.UTF-8):	Pliki programistyczne biblioteki DevIL ILUT
+Group:		Development/Libraries
+Requires:	%{name}-ILUT = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	OpenGL-GLU-devel
+Requires:	SDL-devel >= 1.2.5
+Requires:	allegro-devel >= 4.1.16
+Requires:	xorg-lib-libXext-devel
+
+%description ILUT-devel
+Development files for DevIL ILUT library.
+
+%description ILUT-devel -l pl.UTF-8
+Pliki programistyczne biblioteki DevIL ILUT.
+
+%package ILUT-static
+Summary:	Static DevIL ILUT library
+Summary(pl.UTF-8):	Statyczna biblioteka DevIL ILUT
+Group:		Development/Libraries
+Requires:	%{name}-ILUT-devel = %{version}-%{release}
+
+%description ILUT-static
+Static DevIL ILUT library.
+
+%description ILUT-static -l pl.UTF-8
+Statyczna biblioteka DevIL ILUT.
 
 %package doc
 Summary:	DevIL documentation
@@ -105,13 +158,6 @@ Dokumentacja DevIL.
 %prep
 %setup -q -c -a1 -a2
 %patch0 -p1
-%patch1 -p1
-
-# lpng12 -> lpng
-%{__sed} -i 's,png12,png,' devil-%{version}/m4/devil-definitions.m4
-
-# just SDL and messing libtool macros
-rm -f acinclude.m4
 
 %build
 cd devil-%{version}
@@ -120,11 +166,9 @@ cd devil-%{version}
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-# actual exr support missing in sources, only adds undefined symbol
-CPPFLAGS="%{rpmcppflags} -DIL_NO_EXR"
 %configure \
-	--enable-ILU=yes \
-	--enable-ILUT=yes \
+	--enable-ILU \
+	--enable-ILUT \
 	%{?debug:--disable-release}
 %{__make}
 
@@ -140,25 +184,56 @@ rm -rf $RPM_BUILD_ROOT
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
+%post	devel -p /sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
+
+%postun	devel -p /sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
+
 %files
 %defattr(644,root,root,755)
 %doc devil-%{version}/{AUTHORS,CREDITS,ChangeLog,README.unix}
+%attr(755,root,root) %{_bindir}/ilur
 %attr(755,root,root) %{_libdir}/libIL.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libIL.so.1
 %attr(755,root,root) %{_libdir}/libILU.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libILU.so.1
-%attr(755,root,root) %{_libdir}/libILUT.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libILUT.so.1
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libIL.so
 %attr(755,root,root) %{_libdir}/libILU.so
-%attr(755,root,root) %{_libdir}/libILUT.so
 %{_libdir}/libIL.la
 %{_libdir}/libILU.la
+%dir %{_includedir}/IL
+%{_includedir}/IL/il.h
+%{_includedir}/IL/ilu.h
+%{_includedir}/IL/ilu_region.h
+%{_pkgconfigdir}/IL.pc
+%{_pkgconfigdir}/ILU.pc
+%{_infodir}/DevIL_manual.info*
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libIL.a
+%{_libdir}/libILU.a
+
+%files ILUT
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libILUT.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libILUT.so.1
+
+%files ILUT-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libILUT.so
+%{_includedir}/IL/devil_cpp_wrapper.hpp
+%{_includedir}/IL/ilut.h
 %{_libdir}/libILUT.la
-%{_includedir}/IL
+%{_pkgconfigdir}/ILUT.pc
+
+%files ILUT-static
+%defattr(644,root,root,755)
+%{_libdir}/libILUT.a
 
 %files doc
 %defattr(644,root,root,755)
