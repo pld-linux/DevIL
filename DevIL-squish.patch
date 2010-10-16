@@ -1,0 +1,13 @@
+--- DevIL-1.7.8/devil-1.7.8/configure.ac.orig	2009-03-08 21:43:03.000000000 +0100
++++ DevIL-1.7.8/devil-1.7.8/configure.ac	2010-10-16 11:14:19.027741043 +0200
+@@ -336,7 +336,9 @@
+ 	    [],
+ 	    [with_libsquish="yes"])
+ AS_IF([test "x$with_libsquish" = "xyes"],
+-      [DEVIL_CHECK_LIBSQUISH])
++      [AC_LANG([C++])
++       DEVIL_CHECK_LIBSQUISH
++       AC_LANG([C])])
+ 
+ AC_ARG_WITH([nvtt],
+ 	    [AS_HELP_STRING([--with-nvtt[[=yes/no]]],

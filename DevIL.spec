@@ -1,4 +1,15 @@
-# TODO: libsquish http://code.google.com/p/libsquish/
+#
+# Conditional build:
+%bcond_with	sse	# use SSE extension
+%bcond_with	sse2	# use SSE2 extension
+%bcond_with	sse3	# use SSE3 extension
+#
+%ifarch pentium3 pentium4 %{x8664}
+%define	with_sse	1
+%endif
+%ifarch pentium4 %{x8664}
+%define	with_sse2	1
+%endif
 %define		manual_version	1.5.5
 Summary:	Full featured image library
 Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
@@ -14,6 +25,8 @@ Source1:	http://downloads.sourceforge.net/openil/%{name}-Manual-%{manual_version
 Source2:	http://downloads.sourceforge.net/openil/%{name}-docs.tar.gz
 # Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
 Patch0:		libpng14.patch
+Patch1:		%{name}-squish.patch
+Patch2:		%{name}-as-needed.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
@@ -30,6 +43,7 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.533
+BuildRequires:	squish-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	unzip
 BuildRequires:	xorg-lib-libXext-devel
@@ -82,6 +96,7 @@ Requires:	libjpeg-devel
 Requires:	libmng-devel
 Requires:	libpng-devel
 Requires:	libtiff-devel
+Requires:	squish-devel
 
 %description devel
 DevIL development files (for IL and ILU libraries).
@@ -158,6 +173,8 @@ Dokumentacja DevIL.
 %prep
 %setup -q -c -a1 -a2
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 cd devil-%{version}
@@ -169,7 +186,10 @@ cd devil-%{version}
 %configure \
 	--enable-ILU \
 	--enable-ILUT \
-	%{?debug:--disable-release}
+	%{?debug:--disable-release} \
+	%{!?with_sse:--disable-sse} \
+	%{!?with_sse2:--disable-sse2} \
+	%{!?with_sse3:--disable-sse3}
 %{__make}
 
 %install
