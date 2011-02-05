@@ -127,7 +127,7 @@ Requires:	allegro >= 4.1.16
 %description ILUT
 DevIL ILUT library - connection to higher level libraries.
 
-%description ILUT
+%description ILUT -l pl.UTF-8
 Biblioteka DevIL ILUT - łącznik z bibliotekami wyższego poziomu.
 
 %package ILUT-devel
