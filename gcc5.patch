@@ -1,0 +1,16 @@
+--- DevIL-1.7.8/devil-1.7.8/include/IL/il.h~	2016-05-29 21:20:26.000000000 +0200
++++ DevIL-1.7.8/devil-1.7.8/include/IL/il.h	2016-05-29 21:20:43.592020762 +0200
+@@ -63,13 +63,8 @@
+ 	#endif
+ #endif
+ 
+-#ifdef RESTRICT_KEYWORD
+-#define RESTRICT restrict
+-#define CONST_RESTRICT const restrict
+-#else
+ #define RESTRICT
+ #define CONST_RESTRICT const
+-#endif
+ 
+ #include <stdio.h>
+ 

@@ -27,6 +27,7 @@ Source2:	http://downloads.sourceforge.net/openil/%{name}-docs.tar.gz
 Patch0:		libpng14.patch
 Patch1:		%{name}-squish.patch
 Patch2:		%{name}-as-needed.patch
+Patch3:		gcc5.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
@@ -175,6 +176,7 @@ Dokumentacja DevIL.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 cd devil-%{version}
