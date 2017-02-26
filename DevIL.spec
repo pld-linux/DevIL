@@ -15,7 +15,7 @@ Summary:	Full featured image library
 Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
 Name:		DevIL
 Version:	1.7.8
-Release:	16
+Release:	17
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/openil/%{name}-%{version}.tar.gz
@@ -28,6 +28,7 @@ Patch0:		libpng14.patch
 Patch1:		%{name}-squish.patch
 Patch2:		%{name}-as-needed.patch
 Patch3:		gcc5.patch
+Patch4:		jasper2.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
@@ -177,6 +178,7 @@ Dokumentacja DevIL.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 cd devil-%{version}
