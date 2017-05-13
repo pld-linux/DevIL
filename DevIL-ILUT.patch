@@ -1,0 +1,93 @@
+--- DevIL/DevIL/include/IL/ilut.h.orig	2017-01-02 01:03:56.000000000 +0100
++++ DevIL/DevIL/include/IL/ilut.h	2017-05-13 20:58:19.558675483 +0200
+@@ -98,6 +98,12 @@
+ 	#endif
+ 
+ 	#include <IL/ilut_config.h>
++#else
++#  define ILUT_USE_OPENGL 1
++#  define ILUT_USE_ALLEGRO 1
++#  define ILUT_USE_SDL 1
++#  define ILUT_USE_X11 1
++#  define ILUT_USE_XSHM 1
+ #endif
+ 
+ 
+@@ -145,7 +151,7 @@
+ 
+ // ImageLib Utility Toolkit's Allegro Functions
+ #ifdef ILUT_USE_ALLEGRO
+-//	#include <allegro.h>
++	#include <allegro.h>
+ #endif//ILUT_USE_ALLEGRO
+ 
+ #ifdef ILUT_USE_SDL
+@@ -230,14 +236,6 @@
+ 
+ // ImageLib Utility Toolkit's Allegro Functions
+ #ifdef ILUT_USE_ALLEGRO
+-	#ifdef __cplusplus
+-	extern "C" {
+-	#endif
+-		#include <allegro.h>
+-	#ifdef __cplusplus
+-	}
+-	#endif
+-
+ 	ILAPI BITMAP* ILAPIENTRY ilutAllegLoadImage(ILstring FileName);
+ 	ILAPI BITMAP* ILAPIENTRY ilutConvertToAlleg(PALETTE Pal);
+ #endif//ILUT_USE_ALLEGRO
+--- DevIL/DevIL/src-ILUT/CMakeLists.txt.orig	2017-05-13 21:05:04.292004199 +0200
++++ DevIL/DevIL/src-ILUT/CMakeLists.txt	2017-05-13 21:28:11.045321699 +0200
+@@ -36,6 +36,9 @@
+ 	else(BUILD_SHARED_LIBS)
+ 		add_definitions(-DIL_STATIC_LIB)
+ 	endif(BUILD_SHARED_LIBS)
++else(WIN32)
++	find_package(SDL)
++	include_directories(${SDL_INCLUDE_DIR})
+ endif(WIN32)
+ 
+ source_group("Source Files" FILES src/*.cpp)
+@@ -50,6 +53,10 @@
+ target_link_libraries(ILUT
+ 	IL
+ 	ILU
++	alleg
++	${SDL_LIBRARY}
++	GLU GL
++	Xext
+ )
+ 
+ # generate pkg-config file
+--- DevIL/DevIL/src-ILUT/src/ilut_sdlsurface.cpp.orig	2017-01-02 01:03:56.000000000 +0100
++++ DevIL/DevIL/src-ILUT/src/ilut_sdlsurface.cpp	2017-05-13 21:43:37.848644450 +0200
+@@ -117,7 +117,7 @@
+ 		memcpy(Bitmap->pixels, Data, Image->SizeOfData);
+ 	}
+ 	else {  // Must pad the lines on some images.
+-		Dest = Bitmap->pixels;
++		Dest = static_cast<ILubyte*>(Bitmap->pixels);
+ 		for (i = 0; i < Image->Height; i++) {
+ 			memcpy(Dest, Data + i * Image->Bps, Image->Bps);
+ 			imemclear(Dest + Image->Bps, Pad);
+--- DevIL/DevIL/src-ILUT/src/ilut_x11.cpp.orig	2017-01-02 01:03:56.000000000 +0100
++++ DevIL/DevIL/src-ILUT/src/ilut_x11.cpp	2017-05-13 21:48:53.621974179 +0200
+@@ -188,7 +188,7 @@
+ 		return NULL;
+ 	}
+ 
+-	buffer = malloc( width * height * 4 );
++	buffer = static_cast<char*>(malloc( width * height * 4 ));
+ 	if (!buffer) {
+ 		return NULL;
+ 	}
+@@ -299,7 +299,7 @@
+ 	size = img->bytes_per_line * img->height;
+ 
+ 	info->shmid = shmget( IPC_PRIVATE, size, IPC_CREAT | 0666 );
+-	info->shmaddr = img->data = shmat( info->shmid, 0, 0 );
++	info->shmaddr = img->data = static_cast<char*>(shmat( info->shmid, 0, 0 ));
+ 	info->readOnly = False;
+ 
+ 	// Attach to server

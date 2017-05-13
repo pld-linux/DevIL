@@ -1,57 +1,34 @@
-#
-# Conditional build:
-%bcond_with	sse	# use SSE extension
-%bcond_with	sse2	# use SSE2 extension
-%bcond_with	sse3	# use SSE3 extension
-#
-%ifarch pentium3 pentium4 %{x8664}
-%define	with_sse	1
-%endif
-%ifarch pentium4 %{x8664}
-%define	with_sse2	1
-%endif
-%define		manual_version	1.5.5
 Summary:	Full featured image library
 Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
 Name:		DevIL
-Version:	1.7.8
-Release:	17
+Version:	1.8.0
+Release:	1
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/openil/%{name}-%{version}.tar.gz
-# Source0-md5:	7918f215524589435e5ec2e8736d5e1d
-Source1:	http://downloads.sourceforge.net/openil/%{name}-Manual-%{manual_version}.zip
-# Source1-md5:	6bb2ddfcbe09930c48ef84b8f99479fe
-Source2:	http://downloads.sourceforge.net/openil/%{name}-docs.tar.gz
-# Source2-md5:	eec6ae7a028a3f058bab1a6918428ed5
-Patch0:		libpng14.patch
-Patch1:		%{name}-squish.patch
-Patch2:		%{name}-as-needed.patch
-Patch3:		gcc5.patch
-Patch4:		jasper2.patch
+# Source0-md5:	4d8c21aa4822ac86d77e44f8d7c9becd
+Patch0:		%{name}-cmake.patch
+Patch1:		%{name}-info.patch
+Patch2:		%{name}-ILUT.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
 BuildRequires:	allegro-devel >= 4.1.16
-BuildRequires:	autoconf >= 2.52
-BuildRequires:	automake
+BuildRequires:	cmake >= 2.6
 BuildRequires:	jasper-devel
-BuildRequires:	lcms-devel
+BuildRequires:	lcms2-devel >= 2
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.533
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	squish-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	unzip
 BuildRequires:	xorg-lib-libXext-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_noautoreqdep	libGL.so.1 libGLU.so.1
 
 %description
 Developer's Image Library (DevIL) is a programmer's library to develop
@@ -99,24 +76,13 @@ Requires:	libmng-devel
 Requires:	libpng-devel
 Requires:	libtiff-devel
 Requires:	squish-devel
+Obsoletes:	DevIL-static
 
 %description devel
 DevIL development files (for IL and ILU libraries).
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe bibliotek DevIL (IL i ILU).
-
-%package static
-Summary:	Static DevIL libraries
-Summary(pl.UTF-8):	Statyczne biblioteki DevIL
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description static
-Static DevIL libraries (IL and ILU).
-
-%description static -l pl.UTF-8
-Statyczne biblioteki DevIL (IL i ILU).
 
 %package ILUT
 Summary:	DevIL ILUT library
@@ -142,24 +108,13 @@ Requires:	OpenGL-GLU-devel
 Requires:	SDL-devel >= 1.2.5
 Requires:	allegro-devel >= 4.1.16
 Requires:	xorg-lib-libXext-devel
+Obsoletes:	DevIL-ILUT-static
 
 %description ILUT-devel
 Development files for DevIL ILUT library.
 
 %description ILUT-devel -l pl.UTF-8
 Pliki programistyczne biblioteki DevIL ILUT.
-
-%package ILUT-static
-Summary:	Static DevIL ILUT library
-Summary(pl.UTF-8):	Statyczna biblioteka DevIL ILUT
-Group:		Development/Libraries
-Requires:	%{name}-ILUT-devel = %{version}-%{release}
-
-%description ILUT-static
-Static DevIL ILUT library.
-
-%description ILUT-static -l pl.UTF-8
-Statyczna biblioteka DevIL ILUT.
 
 %package doc
 Summary:	DevIL documentation
@@ -173,34 +128,36 @@ DevIL documentation.
 Dokumentacja DevIL.
 
 %prep
-%setup -q -c -a1 -a2
+%setup -q -n DevIL
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
-cd devil-%{version}
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	--enable-ILU \
-	--enable-ILUT \
-	%{?debug:--disable-release} \
-	%{!?with_sse:--disable-sse} \
-	%{!?with_sse2:--disable-sse2} \
-	%{!?with_sse3:--disable-sse3}
-%{__make}
+# although there is configure.ac, but it misses some auxiliary files (m4/*)
+# and Makefile.am files are outdated (refer to no longer existing *.c files)
+install -d DevIL/build
+cd DevIL/build
+%cmake ..
+
+# info is not covered by CMakeLists
+cd ../docs
+# missing file
+cat >version.texi <<EOF
+@set UPDATED 8 March 2009
+@set UPDATED-MONTH March 2009
+@set EDITION %{version}
+@set VERSION %{version}
+EOF
+makeinfo DevIL_manual.texi
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} -C devil-%{version} install \
+%{__make} -C DevIL/build install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install -Dp DevIL/docs/DevIL_manual.info $RPM_BUILD_ROOT%{_infodir}/DevIL_manual.info
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -216,7 +173,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc devil-%{version}/{AUTHORS,CREDITS,ChangeLog,README.unix}
+%doc DevIL/{AUTHORS,CREDITS,ChangeLog,NEWS,README.md,TODO}
 %attr(755,root,root) %{_bindir}/ilur
 %attr(755,root,root) %{_libdir}/libIL.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libIL.so.1
@@ -227,8 +184,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libIL.so
 %attr(755,root,root) %{_libdir}/libILU.so
-%{_libdir}/libIL.la
-%{_libdir}/libILU.la
 %dir %{_includedir}/IL
 %{_includedir}/IL/il.h
 %{_includedir}/IL/ilu.h
@@ -236,11 +191,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/IL.pc
 %{_pkgconfigdir}/ILU.pc
 %{_infodir}/DevIL_manual.info*
-
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/libIL.a
-%{_libdir}/libILU.a
 
 %files ILUT
 %defattr(644,root,root,755)
@@ -252,13 +202,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libILUT.so
 %{_includedir}/IL/devil_cpp_wrapper.hpp
 %{_includedir}/IL/ilut.h
-%{_libdir}/libILUT.la
 %{_pkgconfigdir}/ILUT.pc
-
-%files ILUT-static
-%defattr(644,root,root,755)
-%{_libdir}/libILUT.a
 
 %files doc
 %defattr(644,root,root,755)
-%doc DevIL*.pdf
+%doc DevIL-docs/DevIL*.pdf

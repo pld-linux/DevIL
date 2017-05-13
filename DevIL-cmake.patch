@@ -1,0 +1,92 @@
+--- DevIL/DevIL/src-IL/CMakeLists.txt.orig	2017-01-02 01:03:56.000000000 +0100
++++ DevIL/DevIL/src-IL/CMakeLists.txt	2017-05-13 07:17:07.992571414 +0200
+@@ -57,7 +57,8 @@
+ source_group("Text Files" FILES ${DevIL_TXT} )
+ 
+ if(BUILD_SHARED_LIBS)
+     add_library(IL SHARED ${DevIL_SRCS} ${DevIL_INC} ${DevIL_RSRC} ${DevIL_TXT})
++    set_target_properties(IL PROPERTIES SOVERSION 1 VERSION 1.8.0)
+ else(BUILD_SHARED_LIBS)
+     add_library(IL ${DevIL_SRCS} ${DevIL_INC} ${DevIL_RSRC} ${DevIL_TXT})
+ endif(BUILD_SHARED_LIBS)
+@@ -248,14 +248,14 @@
+ 
+ # Installation
+ install (TARGETS IL
+-    ARCHIVE DESTINATION lib
+-    LIBRARY DESTINATION lib
++    ARCHIVE DESTINATION lib${LIB_SUFFIX}
++    LIBRARY DESTINATION lib${LIB_SUFFIX}
+     RUNTIME DESTINATION bin
+ )
+ install (FILES ../include/IL/il.h DESTINATION include/IL)
+ 
+ install(FILES
+     ${CMAKE_CURRENT_BINARY_DIR}/IL.pc
+-	DESTINATION lib/pkgconfig
++       DESTINATION lib${LIB_SUFFIX}/pkgconfig
+ )
+ 
+--- DevIL/DevIL/src-ILU/CMakeLists.txt.orig	2017-01-02 01:03:56.000000000 +0100
++++ DevIL/DevIL/src-ILU/CMakeLists.txt	2017-05-13 07:17:53.745904312 +0200
+@@ -43,7 +43,8 @@
+ source_group("Resource Files" FILES ${ILU_RSRC} )
+ 
+ # Remove SHARED to create a static library
+ add_library(ILU SHARED ${ILU_SRCS} ${ILU_INC} ${ILU_RSRC})
++set_target_properties(ILU PROPERTIES SOVERSION 1 VERSION 1.8.0)
+ 
+ 
+ ## ILU requires IL
+@@ -74,14 +74,17 @@
+ 
+ # Installation
+ install (TARGETS ILU
+-    ARCHIVE DESTINATION lib
+-    LIBRARY DESTINATION lib
++    ARCHIVE DESTINATION lib${LIB_SUFFIX}
++    LIBRARY DESTINATION lib${LIB_SUFFIX}
+     RUNTIME DESTINATION bin
+ )
+-install (FILES ../include/IL/ilu.h DESTINATION include/IL)
++install (FILES ../include/IL/ilu.h ../include/IL/ilu_region.h DESTINATION include/IL)
+ 
+ install(FILES
+     ${CMAKE_CURRENT_BINARY_DIR}/ILU.pc
+-	DESTINATION lib/pkgconfig
++       DESTINATION lib${LIB_SUFFIX}/pkgconfig
+ )
+ 
++add_executable(ilur ${CMAKE_CURRENT_SOURCE_DIR}/ilur/ilur.c)
++target_link_libraries(ilur ILU IL)
++install (TARGETS ilur DESTINATION bin)
+--- DevIL/DevIL/src-ILUT/CMakeLists.txt.orig	2017-01-02 01:03:56.000000000 +0100
++++ DevIL/DevIL/src-ILUT/CMakeLists.txt	2017-05-13 07:18:31.642570459 +0200
+@@ -43,7 +43,8 @@
+ source_group("Resource Files" FILES ${ILUT_RSRC} )
+ 
+ # Remove SHARED to create a static library
+ add_library(ILUT SHARED ${ILUT_SRCS} ${ILUT_INC} ${ILUT_RSRC})
++set_target_properties(ILUT PROPERTIES SOVERSION 1 VERSION 1.8.0)
+ 
+ ## add link sub library info
+ target_link_libraries(ILUT
+@@ -72,14 +72,14 @@
+ 
+ # Installation
+ install (TARGETS ILUT
+-    ARCHIVE DESTINATION lib
+-    LIBRARY DESTINATION lib
++    ARCHIVE DESTINATION lib${LIB_SUFFIX}
++    LIBRARY DESTINATION lib${LIB_SUFFIX}
+     RUNTIME DESTINATION bin
+ )
+-install (FILES ../include/IL/ilut.h DESTINATION include/IL)
++install (FILES ../include/IL/ilut.h ../include/IL/devil_cpp_wrapper.hpp DESTINATION include/IL)
+ 
+ install(FILES
+     ${CMAKE_CURRENT_BINARY_DIR}/ILUT.pc
+-	DESTINATION lib/pkgconfig
++       DESTINATION lib${LIB_SUFFIX}/pkgconfig
+ )
+ 

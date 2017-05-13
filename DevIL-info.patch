@@ -1,0 +1,14 @@
+--- DevIL/DevIL/docs/DevIL_manual.texi.orig	2017-01-02 01:03:56.000000000 +0100
++++ DevIL/DevIL/docs/DevIL_manual.texi	2017-05-13 18:12:42.425455619 +0200
+@@ -24,6 +24,11 @@
+ A copy of the license is included in the section entitled ``GNU Free Documentation License''.
+ @end copying
+ 
++@dircategory Libraries:
++@direntry
++* DevIL: (DevIL_manual).		Developer's Image Library
++@end direntry
++
+ @titlepage
+ @title Developer's Image Library manual
+ @sp 1
