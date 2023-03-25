@@ -1,7 +1,6 @@
 --- DevIL/DevIL/src-IL/CMakeLists.txt.orig	2017-01-02 01:03:56.000000000 +0100
-+++ DevIL/DevIL/src-IL/CMakeLists.txt	2017-05-13 07:17:07.992571414 +0200
-@@ -57,7 +57,8 @@
- source_group("Text Files" FILES ${DevIL_TXT} )
++++ DevIL/DevIL/src-IL/CMakeLists.txt	2023-03-25 10:36:16.647374199 +0100
+@@ -58,6 +58,7 @@ source_group("Text Files" FILES ${DevIL_
  
  if(BUILD_SHARED_LIBS)
      add_library(IL SHARED ${DevIL_SRCS} ${DevIL_INC} ${DevIL_RSRC} ${DevIL_TXT})
@@ -9,7 +8,7 @@
  else(BUILD_SHARED_LIBS)
      add_library(IL ${DevIL_SRCS} ${DevIL_INC} ${DevIL_RSRC} ${DevIL_TXT})
  endif(BUILD_SHARED_LIBS)
-@@ -248,14 +248,14 @@
+@@ -248,14 +249,14 @@ configure_file( pkgconfig/IL.pc.cmake.in
  
  # Installation
  install (TARGETS IL
@@ -28,9 +27,8 @@
  )
  
 --- DevIL/DevIL/src-ILU/CMakeLists.txt.orig	2017-01-02 01:03:56.000000000 +0100
-+++ DevIL/DevIL/src-ILU/CMakeLists.txt	2017-05-13 07:17:53.745904312 +0200
-@@ -43,7 +43,8 @@
- source_group("Resource Files" FILES ${ILU_RSRC} )
++++ DevIL/DevIL/src-ILU/CMakeLists.txt	2023-03-25 10:36:31.683959406 +0100
+@@ -44,6 +44,7 @@ source_group("Resource Files" FILES ${IL
  
  # Remove SHARED to create a static library
  add_library(ILU SHARED ${ILU_SRCS} ${ILU_INC} ${ILU_RSRC})
@@ -38,7 +36,7 @@
  
  
  ## ILU requires IL
-@@ -74,14 +74,17 @@
+@@ -74,14 +75,17 @@ endif(UNICODE)
  
  # Installation
  install (TARGETS ILU
@@ -61,9 +59,8 @@
 +target_link_libraries(ilur ILU IL)
 +install (TARGETS ilur DESTINATION bin)
 --- DevIL/DevIL/src-ILUT/CMakeLists.txt.orig	2017-01-02 01:03:56.000000000 +0100
-+++ DevIL/DevIL/src-ILUT/CMakeLists.txt	2017-05-13 07:18:31.642570459 +0200
-@@ -43,7 +43,8 @@
- source_group("Resource Files" FILES ${ILUT_RSRC} )
++++ DevIL/DevIL/src-ILUT/CMakeLists.txt	2023-03-25 10:36:46.680544829 +0100
+@@ -44,6 +44,7 @@ source_group("Resource Files" FILES ${IL
  
  # Remove SHARED to create a static library
  add_library(ILUT SHARED ${ILUT_SRCS} ${ILUT_INC} ${ILUT_RSRC})
@@ -71,7 +68,7 @@
  
  ## add link sub library info
  target_link_libraries(ILUT
-@@ -72,14 +72,14 @@
+@@ -72,14 +73,14 @@ endif(UNICODE)
  
  # Installation
  install (TARGETS ILUT

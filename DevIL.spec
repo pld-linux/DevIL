@@ -2,7 +2,7 @@ Summary:	Full featured image library
 Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
 Name:		DevIL
 Version:	1.8.0
-Release:	1
+Release:	2
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/openil/%{name}-%{version}.tar.gz
@@ -10,19 +10,21 @@ Source0:	http://downloads.sourceforge.net/openil/%{name}-%{version}.tar.gz
 Patch0:		%{name}-cmake.patch
 Patch1:		%{name}-info.patch
 Patch2:		%{name}-ILUT.patch
+Patch3:		%{name}-jasper3.patch
 URL:		http://openil.sourceforge.net/
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	SDL-devel >= 1.2.5
 BuildRequires:	allegro-devel >= 4.1.16
 BuildRequires:	cmake >= 2.6
-BuildRequires:	jasper-devel
+BuildRequires:	jasper-devel >= 3
 BuildRequires:	lcms2-devel >= 2
 BuildRequires:	libjpeg-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	squish-devel
 BuildRequires:	sed >= 4.0
@@ -69,14 +71,14 @@ Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek DevIL
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	OpenEXR-devel
-Requires:	jasper-devel
+Requires:	jasper-devel >= 3
 Requires:	lcms-devel
 Requires:	libjpeg-devel
 Requires:	libmng-devel
 Requires:	libpng-devel
 Requires:	libtiff-devel
 Requires:	squish-devel
-Obsoletes:	DevIL-static
+Obsoletes:	DevIL-static < 1.8
 
 %description devel
 DevIL development files (for IL and ILU libraries).
@@ -108,7 +110,7 @@ Requires:	OpenGL-GLU-devel
 Requires:	SDL-devel >= 1.2.5
 Requires:	allegro-devel >= 4.1.16
 Requires:	xorg-lib-libXext-devel
-Obsoletes:	DevIL-ILUT-static
+Obsoletes:	DevIL-ILUT-static < 1.8
 
 %description ILUT-devel
 Development files for DevIL ILUT library.
@@ -120,6 +122,7 @@ Pliki programistyczne biblioteki DevIL ILUT.
 Summary:	DevIL documentation
 Summary(pl.UTF-8):	Dokumentacja DevIL
 Group:		Documentation
+BuildArch:	noarch
 
 %description doc
 DevIL documentation.
@@ -132,6 +135,7 @@ Dokumentacja DevIL.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 # although there is configure.ac, but it misses some auxiliary files (m4/*)
