@@ -132,10 +132,10 @@ Dokumentacja DevIL.
 
 %prep
 %setup -q -n DevIL
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
+%patch -P3 -p1
 
 %build
 # although there is configure.ac, but it misses some auxiliary files (m4/*)
