@@ -2,7 +2,7 @@ Summary:	Full featured image library
 Summary(pl.UTF-8):	Biblioteka obsługi obrazów z mnóstwem funkcji
 Name:		DevIL
 Version:	1.8.0
-Release:	2
+Release:	3
 License:	LGPL v2.1
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/openil/%{name}-%{version}.tar.gz
